@@ -1,0 +1,34 @@
+---
+# tasks file for ansible-role-cultivator:prereqs.yml
+
+#
+# -----------------------------------------------------------------------------
+# Pre-Req Tasks
+# -----------------------------------------------------------------------------
+# All the Pre-Req tasks
+#
+
+# Install Base OS Packages
+- name: "[Cultivator - Pre-Reqs] Install Base Packages for Tower CLI"
+  yum:
+    name: "{{ cultivator_base_packages }}"
+    state: present
+    disablerepo: "rhel-server-rhscl-7-rpms"
+  become: true
+  tags: [packages]
+
+# Create Cultivator VirtualEnv FilePath
+- name: "[Cultivator - VirtualEnv] Create VirtualEnv Path"
+  file:
+    path: "{{ cultivator_virtualenv_path }}"
+    state: directory
+    mode: '0755'
+  tags: [pip]
+
+# Install Python pip Packages into VirtualEnv
+- name: "[Cultivator - Pre-Reqs] Install PIP Packages for Tower CLI"
+  pip:
+    name: "{{ cultivator_pip_packages }}"
+    virtualenv: "{{ cultivator_virtualenv_path }}"
+  become: true
+  tags: [pip]
