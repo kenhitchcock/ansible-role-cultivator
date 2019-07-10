@@ -13,7 +13,7 @@ cultivator_base_packages:
     - python-six
     #- python2-boto3
     #- python-click
-    - python-httplib2
+    #    - python-httplib2
     - python-virtualenv
 
 # Packages to install with pip

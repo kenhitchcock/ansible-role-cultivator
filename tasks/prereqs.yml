@@ -32,3 +32,9 @@
     virtualenv: "{{ cultivator_virtualenv_path }}"
   become: true
   tags: [pip]
+
+- name: "Add another bin dir to system-wide $PATH."
+  copy:
+    dest: /etc/profile.d/custom-path.sh
+    content: 'PATH=$PATH:{{ cultivator_virtualenv_path }}/bin:{{ cultivator_virtualenv_path }}/lib/python2.7/site-packages/'
+  become: yes

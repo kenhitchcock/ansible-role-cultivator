@@ -8,6 +8,15 @@
 # Any Organisation Tasks
 #
 
+- name: "Debug register"
+  command: |
+           tower-cli config
+  register: towercliconfig
+
+- name: "Debug output"
+  debug:
+    msg: "{{ towercliconfig }}"
+
 
 # Create Orgs
 - name: "[Cultivator - Orgs] Create Organisations"
@@ -15,12 +24,22 @@
     name: "{{ item.name }}"
     description: "{{ item.description }}"
     state: present
-    tower_host: "{{ cultivator_tower_server }}"
-    tower_username: "{{ cultivator_tower_username }}"
-    tower_password: "{{ cultivator_tower_password }}"
-    validate_certs: "{{ cultivator_tower_validate_certs }}"
+    tower_config_file: "~/tower_cli.cfg"
   loop: "{{ cultivator_tower_orgs }}"
-  environment:
-    PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'
-    PYTHONPATH: '{{ cultivator_virtualenv_path }}/bin/python'
-  
+
+  #  environment:
+  #    PATH: '/opt/cultivator/bin:{{ ansible_env.PATH }}'
+  #    ansible_python_interpreter: '/opt/cultivator/bin/python'
+ 
+
+
+    #     tower_organization:
+    #    name: "{{ item.name }}"
+    #    description: "{{ item.description }}"
+    #    state: present
+    #    tower_host: "{{ cultivator_tower_server }}"
+    #    tower_username: "{{ cultivator_tower_username }}"
+    #    tower_password: "{{ cultivator_tower_password }}"
+    #    validate_certs: "{{ cultivator_tower_validate_certs }}"
+    #PATH: '{{ cultivator_virtualenv_path }}/bin:{{ ansible_env.PATH }}'
+    #PYTHONPATH: '{{ cultivator_virtualenv_path }}/bin/python'
